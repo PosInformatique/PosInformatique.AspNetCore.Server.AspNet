@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <AssemblyName>PosInformatique.AspNetCore.Server.AspNet</AssemblyName>
+    <RootNamespace>PosInformatique.AspNetCore.Server.AspNet</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/PosInformatique/PosInformatique.AspNetCore.Server.AspNet</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Company>P.O.S Informatique</Company>
+    <Copyright>Copyright © 1999-2019 P.O.S Informatique - All rights reserved.</Copyright>
+    <PackageTags>aspnet aspnetcore webforms mvc server hosting host</PackageTags>
+    <Description>
+      PosInformatique.AspNetCore.Server.AspNet is a library to host ASP .NET Core Web API on ASP .NET
+      non-core (WebForms and MVC) infrastructure based on the .NET Framework.
+    </Description>
+    <Authors>Gilles TOURREAU</Authors>
+    <PackageReleaseNotes>1.0.0 - Initial version</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/PosInformatique/PosInformatique.AspNetCore.Server.AspNet.git</RepositoryUrl>
+    <Version>1.0.0-alpha1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>AspNetCore.Server.AspNet.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>AspNetCore.Server.AspNet.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.17.0.9346">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AspNetServerResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AspNetServerResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AspNetServerResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AspNetServerResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
