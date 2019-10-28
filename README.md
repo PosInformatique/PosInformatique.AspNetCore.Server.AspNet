@@ -2,6 +2,18 @@
 **PosInformatique.AspNetCore.Server.AspNet** is a library to host ASP .NET Core Web API on ASP .NET
 non-core (WebForms and MVC) infrastructure based on the .NET Framework.
 
+![Architecture](Documentation/Architecture.png)
+
+## Architecture
+
+![Pipeline Execution](Documentation/PipelineExecution.png)
+
+The **PosInformatique.AspNetCore.Server.AspNet** is an ASP .NET non-core ``IHttpHandler``
+which is executed depending of configured routes in the ASP .NET non-core infrastructure.
+When the **PosInformatique.AspNetCore.Server.AspNet** ``IHttpHandler`` internal implementation
+is called, the HTTP query is send to the ASP .NET Core infrastructure which execute
+the query **with the same behavior** if it was hosted in a dedicated IIS, Console or Kestrel host.
+
 ## Installing from NuGet
 The **PosInformatique.AspNetCore.Server.AspNet** is available directly on the
 [NuGet](https://www.nuget.org/packages/PosInformatique.AspNetCore.Server.AspNet/) official website.
@@ -109,6 +121,29 @@ public class Startup
     }
 }
 ````
+
+## Limitations
+You have to becareful to use **ONLY** the components and service of the ASP .NET Core inside
+your controllers implementation.
+Avoid to access to the components or services of ASP .NET non-core from your controllers
+implementations. For example, be sure to access to the ASP .NET Core ``HttpContext``
+inside your controllers code and do not use the ASP .NET non-core ``HttpContext``.
+
+![Asp Net Core Limitation](Documentation/AspNetCoreLimitation.png)
+
+As is shown in the previous architecture drawing, in your controllers code you should
+use only to the ASP .NET Core API even you can access to the ASP .NET non-core infrastructure API.
+
+### ASP .NET Core 3.x
+Because ASP .NET Core 3.x is based only on the .NET Core 3.0 runtime (and not 
+on the .NET Standard 2.0 like before with the ASP .NET Core 2.x), this library
+**can not** be used to host ASP .NET Core 3.x Web API on ASP .NET non-core infrastructure.
+
+### ASP .NET Core Razor views
+Currently the **PosInformatique.AspNetCore.Server.AspNet** can only work with raw
+ASP .NET Core infrastructure and for the Web API controllers implementations.
+It is **not possible** to use this library with the MVC razor views, because
+the Visual Studio project use the ASP .NET non-core web compiler.
 
 ## Contributions
 Do not hesitate to clone my code and submit some changes...
