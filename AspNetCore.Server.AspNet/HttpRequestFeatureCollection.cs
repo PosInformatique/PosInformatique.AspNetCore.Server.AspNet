@@ -46,8 +46,19 @@ namespace PosInformatique.AspNetCore.Server.AspNet
             this.Body = context.Request.InputStream;
             this.Headers = new HeaderDictionary(context.Request.Headers.AllKeys.ToDictionary(key => key, key => (StringValues)context.Request.Headers[key]));
             this.Method = context.Request.HttpMethod;
-            this.Path = context.Request.Path;
+
+            // Takes the AppRelativeCurrentExecutionFilePath and remove the "~" at the first position
+            // because the Path in ASP .NET Core request is relative to the PathBase
+            this.Path = context.Request.AppRelativeCurrentExecutionFilePath.Substring(1);
+
+            // If the PathBase is "/", remove it and use and empty string to avoid duplicate "/" in the ASP .NET Core infrastructure.
             this.PathBase = context.Request.ApplicationPath;
+
+            if (this.PathBase == "/")
+            {
+                this.PathBase = string.Empty;
+            }
+
             this.Protocol = context.Request.ServerVariables["SERVER_PROTOCOL"];
             this.QueryString = context.Request.Url.Query;
             this.Scheme = context.Request.Url.Scheme;

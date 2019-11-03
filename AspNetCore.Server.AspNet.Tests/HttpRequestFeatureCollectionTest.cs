@@ -43,8 +43,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -67,8 +67,75 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
             featureCollection.Headers["Header#1"].ToString().Should().Be("Value #1");
             featureCollection.Headers["Header#2"].ToString().Should().Be("Value #2");
             featureCollection.Method.Should().Be("THE METHOD");
-            featureCollection.Path.Should().Be("The path");
+            featureCollection.Path.Should().Be("/The/path");
             featureCollection.PathBase.Should().Be("The application path");
+            featureCollection.Protocol.Should().Be("The server protocol");
+            featureCollection.QueryString.Should().Be("?a=1&b=2");
+            featureCollection.RawTarget.Should().BeNull();
+            featureCollection.Scheme.Should().Be("special");
+            featureCollection.TraceIdentifier.Should().HaveLength(Guid.NewGuid().ToString().Length);
+            featureCollection.Revision.Should().Be(3);
+            featureCollection.Response.Should().NotBeNull();
+            featureCollection.IsReadOnly.Should().BeFalse();
+
+            featureCollection[typeof(IHttpRequestFeature)].Should().BeSameAs(featureCollection);
+            featureCollection.Get<IHttpRequestFeature>().Should().BeSameAs(featureCollection);
+
+            featureCollection[typeof(IHttpRequestIdentifierFeature)].Should().BeSameAs(featureCollection);
+            featureCollection.Get<IHttpRequestIdentifierFeature>().Should().BeSameAs(featureCollection);
+
+            featureCollection[typeof(IHttpResponseFeature)].Should().BeSameAs(featureCollection.Response);
+            featureCollection.Get<IHttpResponseFeature>().Should().BeSameAs(featureCollection.Response);
+        }
+
+        [Fact]
+        public void Constructor_WithRootApplicationPath()
+        {
+            var inputStream = Mock.Of<Stream>();
+            var headers = new NameValueCollection()
+            {
+                { "Header#1", "Value #1" },
+                { "Header#2", "Value #2" },
+            };
+            var serverVariables = new NameValueCollection()
+            {
+                { "SERVER_PROTOCOL", "The server protocol" },
+            };
+
+            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
+            var request = new Mock<HttpRequestBase>(MockBehavior.Strict);
+            request.SetupGet(r => r.InputStream)
+                .Returns(inputStream);
+            request.SetupGet(r => r.Headers)
+                .Returns(headers);
+            request.SetupGet(r => r.HttpMethod)
+                .Returns("THE METHOD");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
+            request.SetupGet(r => r.ApplicationPath)
+                .Returns("/");
+            request.SetupGet(r => r.ServerVariables)
+                .Returns(serverVariables);
+            request.SetupGet(r => r.Url)
+                .Returns(new Uri("special://the_uri/?a=1&b=2"));
+
+            var context = new Mock<HttpContextBase>(MockBehavior.Strict);
+            context.Setup(c => c.Request)
+                .Returns(request.Object);
+            context.Setup(c => c.Response)
+                .Returns(response.Object);
+
+            var features = new FeatureCollection();
+
+            var featureCollection = new HttpRequestFeatureCollection(context.Object, features);
+
+            featureCollection.Body.Should().BeSameAs(inputStream);
+            featureCollection.Headers.Count.Should().Be(2);
+            featureCollection.Headers["Header#1"].ToString().Should().Be("Value #1");
+            featureCollection.Headers["Header#2"].ToString().Should().Be("Value #2");
+            featureCollection.Method.Should().Be("THE METHOD");
+            featureCollection.Path.Should().Be("/The/path");
+            featureCollection.PathBase.Should().BeEmpty();
             featureCollection.Protocol.Should().Be("The server protocol");
             featureCollection.QueryString.Should().Be("?a=1&b=2");
             featureCollection.RawTarget.Should().BeNull();
@@ -106,8 +173,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -147,8 +214,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -188,8 +255,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -229,8 +296,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -270,8 +337,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -311,8 +378,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -352,8 +419,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -393,8 +460,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -436,8 +503,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -477,8 +544,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -520,8 +587,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -575,8 +642,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
@@ -630,8 +697,8 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
                 .Returns(headers);
             request.SetupGet(r => r.HttpMethod)
                 .Returns("THE METHOD");
-            request.SetupGet(r => r.Path)
-                .Returns("The path");
+            request.SetupGet(r => r.AppRelativeCurrentExecutionFilePath)
+                .Returns("~/The/path");
             request.SetupGet(r => r.ApplicationPath)
                 .Returns("The application path");
             request.SetupGet(r => r.ServerVariables)
