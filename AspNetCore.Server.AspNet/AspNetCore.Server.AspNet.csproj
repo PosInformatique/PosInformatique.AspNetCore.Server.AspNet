@@ -18,8 +18,8 @@
     <Authors>Gilles TOURREAU</Authors>
     <PackageReleaseNotes>1.0.0 - Initial version</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/PosInformatique/PosInformatique.AspNetCore.Server.AspNet.git</RepositoryUrl>
-    <Version>1.0.0-alpha1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
