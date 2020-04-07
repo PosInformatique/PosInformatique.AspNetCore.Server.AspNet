@@ -18,6 +18,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{8183
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Server.AspNet.IntegrationTests", "samples\AspNetCore.Server.AspNet.IntegrationTests\AspNetCore.Server.AspNet.IntegrationTests.csproj", "{86B87813-F34E-4305-B8CC-25BFE5CABDE9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mvc", "mvc", "{F02AF051-6BCB-4458-99FD-6E74650F1DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetWebForms", "samples\mvc\AspNetWebForms\AspNetWebForms.csproj", "{94517202-8E1B-43D1-A032-1F4B9ED09AA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMvcRazorClassLibrary", "samples\mvc\AspNetMvcRazorClassLibrary\AspNetMvcRazorClassLibrary.csproj", "{1E82F812-419D-42F6-90D3-D088BEFF584B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,12 +42,23 @@ Global
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9} = {81831F70-5A1B-487C-A679-C7DDA9DB2E67}
+		{F02AF051-6BCB-4458-99FD-6E74650F1DF1} = {81831F70-5A1B-487C-A679-C7DDA9DB2E67}
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5} = {F02AF051-6BCB-4458-99FD-6E74650F1DF1}
+		{1E82F812-419D-42F6-90D3-D088BEFF584B} = {F02AF051-6BCB-4458-99FD-6E74650F1DF1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFBC9A9C-56DB-4DC5-A513-5BA7B041BC72}
