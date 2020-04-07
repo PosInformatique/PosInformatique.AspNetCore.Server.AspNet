@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCore.Server.AspNet\AspNetCore.Server.AspNet.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.Server.AspNet\AspNetCore.Server.AspNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>

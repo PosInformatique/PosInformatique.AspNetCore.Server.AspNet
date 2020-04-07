@@ -2,11 +2,11 @@
 **PosInformatique.AspNetCore.Server.AspNet** is a library to host ASP .NET Core Web API on ASP .NET
 non-core (WebForms and MVC) infrastructure based on the .NET Framework.
 
-![Architecture](Documentation/Architecture.png)
+![Architecture](documentation/Architecture.png)
 
 ## Architecture
 
-![Pipeline Execution](Documentation/PipelineExecution.png)
+![Pipeline Execution](documentation/PipelineExecution.png)
 
 The **PosInformatique.AspNetCore.Server.AspNet** is an ASP .NET non-core ``IHttpHandler``
 which is executed depending of configured routes in the ASP .NET non-core infrastructure.
@@ -129,7 +129,7 @@ Avoid to access to the components or services of ASP .NET non-core from your con
 implementations. For example, be sure to access to the ASP .NET Core ``HttpContext``
 inside your controllers code and do not use the ASP .NET non-core ``HttpContext``.
 
-![Asp Net Core Limitation](Documentation/AspNetCoreLimitation.png)
+![Asp Net Core Limitation](documentation/AspNetCoreLimitation.png)
 
 As is shown in the previous architecture drawing, in your controllers code you should
 use only to the ASP .NET Core API even you can access to the ASP .NET non-core infrastructure API.

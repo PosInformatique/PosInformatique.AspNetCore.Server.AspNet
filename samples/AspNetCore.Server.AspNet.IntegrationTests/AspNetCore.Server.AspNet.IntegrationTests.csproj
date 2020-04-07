@@ -100,7 +100,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCore.Server.AspNet\AspNetCore.Server.AspNet.csproj">
+    <ProjectReference Include="..\..\src\AspNetCore.Server.AspNet\AspNetCore.Server.AspNet.csproj">
       <Project>{9f6d3665-1dda-486f-a5de-c3d48afd2e39}</Project>
       <Name>AspNetCore.Server.AspNet</Name>
     </ProjectReference>
