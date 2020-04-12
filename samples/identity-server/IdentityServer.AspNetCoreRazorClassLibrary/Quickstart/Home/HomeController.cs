@@ -34,8 +34,8 @@ namespace IdentityServer.AspNetCoreRazorClassLibrary
                 return View();
             }
 
-            _logger.LogInformation("Homepage is disabled in production. Returning 404.");
-            return NotFound();
+            // _logger.LogInformation("Homepage is disabled in production. Returning 404.");
+            // return NotFound();
         }
 
         /// <summary>
