@@ -18,6 +18,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{8183
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Server.AspNet.IntegrationTests", "samples\AspNetCore.Server.AspNet.IntegrationTests\AspNetCore.Server.AspNet.IntegrationTests.csproj", "{86B87813-F34E-4305-B8CC-25BFE5CABDE9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mvc", "mvc", "{F02AF051-6BCB-4458-99FD-6E74650F1DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetWebForms", "samples\mvc\AspNetWebForms\AspNetWebForms.csproj", "{94517202-8E1B-43D1-A032-1F4B9ED09AA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetMvcRazorClassLibrary", "samples\mvc\AspNetMvcRazorClassLibrary\AspNetMvcRazorClassLibrary.csproj", "{1E82F812-419D-42F6-90D3-D088BEFF584B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity-server", "identity-server", "{18F4F357-E22D-4DDE-B569-C83C9541409D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.AspNetWebForms", "samples\identity-server\IdentityServer.AspNetWebForms\IdentityServer.AspNetWebForms.csproj", "{15E7552D-80CB-4C25-81B0-AA39F46CD92F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.AspNetCoreRazorClassLibrary", "samples\identity-server\IdentityServer.AspNetCoreRazorClassLibrary\IdentityServer.AspNetCoreRazorClassLibrary.csproj", "{9D016137-BB56-4AFC-93B0-70274A58F00C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,12 +48,34 @@ Global
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E82F812-419D-42F6-90D3-D088BEFF584B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E7552D-80CB-4C25-81B0-AA39F46CD92F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E7552D-80CB-4C25-81B0-AA39F46CD92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E7552D-80CB-4C25-81B0-AA39F46CD92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E7552D-80CB-4C25-81B0-AA39F46CD92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D016137-BB56-4AFC-93B0-70274A58F00C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D016137-BB56-4AFC-93B0-70274A58F00C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D016137-BB56-4AFC-93B0-70274A58F00C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D016137-BB56-4AFC-93B0-70274A58F00C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{86B87813-F34E-4305-B8CC-25BFE5CABDE9} = {81831F70-5A1B-487C-A679-C7DDA9DB2E67}
+		{F02AF051-6BCB-4458-99FD-6E74650F1DF1} = {81831F70-5A1B-487C-A679-C7DDA9DB2E67}
+		{94517202-8E1B-43D1-A032-1F4B9ED09AA5} = {F02AF051-6BCB-4458-99FD-6E74650F1DF1}
+		{1E82F812-419D-42F6-90D3-D088BEFF584B} = {F02AF051-6BCB-4458-99FD-6E74650F1DF1}
+		{18F4F357-E22D-4DDE-B569-C83C9541409D} = {81831F70-5A1B-487C-A679-C7DDA9DB2E67}
+		{15E7552D-80CB-4C25-81B0-AA39F46CD92F} = {18F4F357-E22D-4DDE-B569-C83C9541409D}
+		{9D016137-BB56-4AFC-93B0-70274A58F00C} = {18F4F357-E22D-4DDE-B569-C83C9541409D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFBC9A9C-56DB-4DC5-A513-5BA7B041BC72}

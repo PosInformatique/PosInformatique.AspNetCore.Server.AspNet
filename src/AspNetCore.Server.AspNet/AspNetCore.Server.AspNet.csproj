@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>PosInformatique.AspNetCore.Server.AspNet</AssemblyName>
     <RootNamespace>PosInformatique.AspNetCore.Server.AspNet</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

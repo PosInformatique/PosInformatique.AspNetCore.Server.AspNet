@@ -8,8 +8,10 @@ namespace PosInformatique.AspNetCore.Server.AspNet
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
+    using System.Web;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Microsoft.Net.Http.Headers;
@@ -101,20 +103,80 @@ namespace PosInformatique.AspNetCore.Server.AspNet
         }
 
         /// <inheritdoc />
+        [SuppressMessage("Critical Vulnerability", "S3330:\"HttpOnly\" should be set on cookies", Justification = "Checked")]
         public StringValues this[string key]
         {
             get
             {
-                return this.response.Headers[key];
+                if (key == HeaderNames.Location)
+                {
+                    return this.response.RedirectLocation;
+                }
+                else if (key == HeaderNames.SetCookie)
+                {
+                    var stringCookies = new string[this.response.Cookies.Count];
+
+                    for (int i = 0; i < stringCookies.Length; i++)
+                    {
+                        var aspNetCookie = this.response.Cookies[i];
+
+                        var cookie = new SetCookieHeaderValue(aspNetCookie.Name)
+                        {
+                            Domain = aspNetCookie.Domain,
+                            Expires = aspNetCookie.Expires == DateTime.MinValue ? DateTimeOffset.MinValue : aspNetCookie.Expires,
+                            HttpOnly = aspNetCookie.HttpOnly,
+                            Path = aspNetCookie.Path,
+                            SameSite = (Microsoft.Net.Http.Headers.SameSiteMode)aspNetCookie.SameSite,
+                            Secure = aspNetCookie.Secure,
+                            Value = aspNetCookie.Value,
+                        };
+
+                        stringCookies[i] = cookie.ToString();
+                    }
+
+                    return new StringValues(stringCookies);
+                }
+                else
+                {
+                    return this.response.Headers[key];
+                }
             }
 
             set
             {
-                this.response.Headers[key] = value;
-
-                if (key == HeaderNames.ContentType)
+                if (key == HeaderNames.Location)
                 {
-                    this.response.ContentType = value;
+                    this.response.RedirectLocation = value;
+                }
+                else if (key == HeaderNames.SetCookie)
+                {
+                    foreach (var stringCookie in value)
+                    {
+                        var aspNetCoreCookie = SetCookieHeaderValue.Parse(stringCookie);
+                        var aspNetCookie = new HttpCookie(aspNetCoreCookie.Name.ToString())
+                        {
+                            Domain = aspNetCoreCookie.Domain.ToString(),
+                            Expires = aspNetCoreCookie.Expires.HasValue ? aspNetCoreCookie.Expires.Value.DateTime : DateTime.MinValue,
+                            HttpOnly = aspNetCoreCookie.HttpOnly,
+                            Path = aspNetCoreCookie.Path.ToString(),
+                            SameSite = (System.Web.SameSiteMode)aspNetCoreCookie.SameSite,
+                            Secure = aspNetCoreCookie.Secure,
+                            Value = aspNetCoreCookie.Value.ToString(),
+                        };
+
+                        this.response.Cookies.Remove(aspNetCookie.Name);
+
+                        this.response.Cookies.Add(aspNetCookie);
+                    }
+                }
+                else
+                {
+                    this.response.Headers[key] = value;
+
+                    if (key == HeaderNames.ContentType)
+                    {
+                        this.response.ContentType = value;
+                    }
                 }
             }
         }

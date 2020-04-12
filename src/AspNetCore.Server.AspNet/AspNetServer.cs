@@ -27,14 +27,12 @@ namespace PosInformatique.AspNetCore.Server.AspNet
         /// <summary>
         /// Initializes a new instance of the <see cref="AspNetServer"/> class.
         /// </summary>
-        /// <param name="serviceProvider"><see cref="IServiceProvider"/> used to retrieve the services required by the <see cref="AspNetCoreRequestRouteHandler"/>.</param>
         /// <param name="options">Options of the <see cref="AspNetServer"/>.</param>
-        public AspNetServer(IServiceProvider serviceProvider, IOptions<AspNetServerOptions> options)
+        public AspNetServer(IOptions<AspNetServerOptions> options)
         {
             this.options = options;
 
             this.Features = new FeatureCollection();
-            this.Features.Set<IServiceProvidersFeature>(new ServiceProvidersFeature() { RequestServices = serviceProvider });
         }
 
         /// <inheritdoc />
