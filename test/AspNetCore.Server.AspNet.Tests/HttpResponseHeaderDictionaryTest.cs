@@ -115,6 +115,135 @@ namespace PosInformatique.AspNetCore.Server.AspNet.Tests
         }
 
         [Fact]
+        public void Indexer_WithLocation()
+        {
+            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
+            response.SetupSet(r => r.RedirectLocation = "NewLocation");
+            response.SetupGet(r => r.RedirectLocation).Returns("ExistingLocation");
+
+            var responseFeature = new HttpResponseHeaderDictionary(response.Object);
+
+            responseFeature["Location"].Should().Equal("ExistingLocation");
+
+            // ASP .NET Core => ASP .NET non-core
+            responseFeature["Location"] = "NewLocation";
+
+            response.VerifySet(r => r.RedirectLocation = "NewLocation");
+            response.VerifyGet(r => r.RedirectLocation);
+        }
+
+        [Fact]
+        public void Indexer_WithSetCookies()
+        {
+            var expires1 = new DateTime(2500, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+
+            var cookie1 = new HttpCookie("C1")
+            {
+                Domain = "D1",
+                Expires = expires1,
+                HttpOnly = false,
+                Path = "/path1",
+                SameSite = SameSiteMode.Lax,
+                Secure = false,
+                Value = "V1",
+            };
+
+            var cookie2 = new HttpCookie("C2")
+            {
+                Domain = "D2",
+                Expires = DateTime.MinValue,
+                HttpOnly = true,
+                Path = "/path2",
+                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                Value = "V2",
+            };
+
+            var collection = new HttpCookieCollection();
+            collection.Add(cookie1);
+            collection.Add(cookie2);
+
+            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
+            response.SetupGet(r => r.Cookies).Returns(collection);
+
+            var responseFeature = new HttpResponseHeaderDictionary(response.Object);
+
+            responseFeature["Set-Cookie"].Should().Equal("C1=V1; expires=Fri, 01 Jan 2500 01:01:01 GMT; domain=D1; path=/path1; samesite=lax", "C2=V2; expires=Mon, 01 Jan 0001 00:00:00 GMT; domain=D2; path=/path2; secure; samesite=strict; httponly");
+
+            // ASP .NET Core => ASP .NET non-core (with no expiration time)
+            responseFeature["Set-Cookie"] = "C5=V5; path=/path5; samesite=strict; httponly";
+
+            collection.Should().HaveCount(3);
+            collection[0].Should().BeSameAs(cookie1);
+            collection[1].Should().BeSameAs(cookie2);
+            collection[2].Domain.Should().BeEmpty();
+            collection[2].Expires.Should().Be(DateTime.MinValue);
+            collection[2].HttpOnly.Should().BeTrue();
+            collection[2].Name.Should().Be("C5");
+            collection[2].Path.Should().Be("/path5");
+            collection[2].SameSite.Should().Be(SameSiteMode.Strict);
+            collection[2].Secure.Should().BeFalse();
+            collection[2].Value.Should().Be("V5");
+
+            response.VerifyGet(r => r.Cookies);
+        }
+
+        [Fact]
+        public void Indexer_WithSetCookies_ReplaceExistingCookie()
+        {
+            var expires1 = new DateTime(2500, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+            var expires2 = new DateTime(2500, 2, 2, 2, 2, 2, DateTimeKind.Utc);
+
+            var cookie2 = new HttpCookie("C2")
+            {
+                Domain = "D2",
+                Expires = expires2,
+                HttpOnly = true,
+                Path = "/path2",
+                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                Value = "V2",
+            };
+
+            var collection = new HttpCookieCollection();
+            collection.Add(
+                new HttpCookie("C1")
+                {
+                    Domain = "D1",
+                    Expires = expires1,
+                    HttpOnly = false,
+                    Path = "/path1",
+                    SameSite = SameSiteMode.Lax,
+                    Secure = false,
+                    Value = "V1",
+                });
+            collection.Add(cookie2);
+
+            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
+            response.SetupGet(r => r.Cookies).Returns(collection);
+
+            var responseFeature = new HttpResponseHeaderDictionary(response.Object);
+
+            responseFeature["Set-Cookie"].Should().Equal("C1=V1; expires=Fri, 01 Jan 2500 01:01:01 GMT; domain=D1; path=/path1; samesite=lax", "C2=V2; expires=Tue, 02 Feb 2500 02:02:02 GMT; domain=D2; path=/path2; secure; samesite=strict; httponly");
+
+            // ASP .NET Core => ASP .NET non-core (replace cookie "C1" with expiration time)
+            responseFeature["Set-Cookie"] = "C1=V5; expires=Sun, 03 Jan 2500 03:03:03 GMT; path=/path5; samesite=lax; secure";
+
+            collection.Should().HaveCount(2);
+            collection[0].Should().BeSameAs(cookie2);
+            collection[1].Domain.Should().BeEmpty();
+            collection[1].Expires.Should().Be(new DateTime(2500, 1, 3, 3, 3, 3));
+            collection[1].HttpOnly.Should().BeFalse();
+            collection[1].Name.Should().Be("C1");
+            collection[1].Path.Should().Be("/path5");
+            collection[1].SameSite.Should().Be(SameSiteMode.Lax);
+            collection[1].Secure.Should().BeTrue();
+            collection[1].Value.Should().Be("V5");
+
+            response.VerifyGet(r => r.Cookies);
+        }
+
+        [Fact]
         public void ContentLength()
         {
             var headers = new NameValueCollection()
