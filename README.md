@@ -122,6 +122,24 @@ public class Startup
 }
 ````
 
+## Samples
+The Git repository contains some samples (in `/samples/` folder) to illustrate usage of this library.
+(I use also these projects to do some integration tests).
+
+- `/samples/mvc/`: This sample illustrate how to how a ASP .NET MVC 2 Razor Class
+Library (RCL) inside a ASP .NET Web Forms project.
+
+- `/samples/identity/`: This sample illustrate how to use the
+[Identity Server](https://github.com/IdentityServer/IdentityServer4)
+based on ASP .NET Core MVC 2 Razor Class Library (RCL) and use
+an Open ID authentication with an ASP .NET Web Forms application. This
+ASP .NET Web Forms application host the ASP .NET Core MVC 2 Razor Class Library
+using the
+[PosInformatique.AspNetCore.Server.AspNet](https://www.nuget.org/packages/PosInformatique.AspNetCore.Server.AspNet/)
+library.
+Also, the ASP .NET Web Forms application use OWIN infrastructure to use
+the Open ID authentication provider.
+
 ## Limitations
 You have to becareful to use **ONLY** the components and service of the ASP .NET Core inside
 your controllers implementation.
@@ -134,16 +152,10 @@ inside your controllers code and do not use the ASP .NET non-core ``HttpContext`
 As is shown in the previous architecture drawing, in your controllers code you should
 use only to the ASP .NET Core API even you can access to the ASP .NET non-core infrastructure API.
 
-### ASP .NET Core 3.x
+### ASP .NET Core >= 3.x
 Because ASP .NET Core 3.x is based only on the .NET Core 3.0 runtime (and not 
 on the .NET Standard 2.0 like before with the ASP .NET Core 2.x), this library
 **can not** be used to host ASP .NET Core 3.x Web API on ASP .NET non-core infrastructure.
-
-### ASP .NET Core Razor views
-Currently the **PosInformatique.AspNetCore.Server.AspNet** can only work with raw
-ASP .NET Core infrastructure and for the Web API controllers implementations.
-It is **not possible** to use this library with the MVC razor views, because
-the Visual Studio project use the ASP .NET non-core web compiler.
 
 ## Contributions
 Do not hesitate to clone my code and submit some changes...
